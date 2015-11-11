@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     static final String text_view1_key ="key1";
     static final String text_view2_key="key2";
     private boolean flagDublePress = false;
-
+    private ViewGroup.LayoutParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +33,25 @@ public class MainActivity extends AppCompatActivity {
         button2 = (Button)findViewById(R.id.button2);
         textView1 = (TextView)findViewById(R.id.textView1);
         textView2 = (TextView)findViewById(R.id.textView2);
-
         textView1.setTextSize(50);
         textView2.setTextSize(50);
         textView2.setText("0");
+
+
+        //random place of button 1/2  //not finsed!!!
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(2); // random int we will get "1" || "2"
+        if (randomInt ==1)
+        {
+
+           // button1.setLayoutParams(button2.getLayoutParams());
+
+        }
+        else // randomInt ==2
+        {
+           //do not replace button
+        }
+
 
 
         if(savedInstanceState != null)
