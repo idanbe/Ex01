@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
                     textView1.setText(Long.toString(time));
                     int t1 = Integer.parseInt(textView1.getText().toString());
                     int t2 = Integer.parseInt((textView2.getText()).toString());
-                    if (t2 > t1 || t2 == 0) {
+                    if (t2 > t1 || t2 == 0)  //new record
+                    {
+                        Toast.makeText(MainActivity.this,"Good job Bboh!!!:\n" +"New record: " + textView1.getText().toString(),
+                                Toast.LENGTH_SHORT).show();
                         textView2.setText(textView1.getText());
                     }
                     flagDublePress = false;
