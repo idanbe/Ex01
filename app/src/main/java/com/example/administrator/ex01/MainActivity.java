@@ -42,16 +42,19 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopWatch.stop();
-                long time = stopWatch.getTimeMili();
-                textView1.setText(Long.toString(time));
-                int t1 = Integer.parseInt(textView1.getText().toString());
-                int t2 = Integer.parseInt((textView2.getText()).toString());
-                if ( t2 > t1 || t2 == 0){
-                        textView2.setText(textView1.getText());
-                }
-                flagDublePress=false;
 
+                if (flagDublePress==true)
+                {
+                    stopWatch.stop();
+                    long time = stopWatch.getTimeMili();
+                    textView1.setText(Long.toString(time));
+                    int t1 = Integer.parseInt(textView1.getText().toString());
+                    int t2 = Integer.parseInt((textView2.getText()).toString());
+                    if (t2 > t1 || t2 == 0) {
+                        textView2.setText(textView1.getText());
+                    }
+                    flagDublePress = false;
+                }
             }
         });
 
