@@ -16,7 +16,10 @@ public class MainActivity extends AppCompatActivity {
     private StopWatch stopWatch = new StopWatch();
     private TextView textView1;
     private TextView textView2 ;
+    static final String text_view1_key ="key1";
+    static final String text_view2_key="key2";
     private boolean flagDublePress = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +29,22 @@ public class MainActivity extends AppCompatActivity {
         button2 = (Button)findViewById(R.id.button2);
         textView1 = (TextView)findViewById(R.id.textView1);
         textView2 = (TextView)findViewById(R.id.textView2);
-        textView2.setText("0");
+
         textView1.setTextSize(50);
         textView2.setTextSize(50);
+        textView2.setText("0");
+
+
+        if(savedInstanceState != null)
+        {
+            String savedText1 = savedInstanceState.getString(text_view1_key);
+            textView1.setText(savedText1);
+            String savedText2 = savedInstanceState.getString(text_view2_key);
+            textView2.setText(savedText2);
+        }
+        else {
+
+        }
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!flagDublePress)
                     stopWatch.start();
                 flagDublePress=true;
+
             }
         });
 
@@ -65,6 +82,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //save input text in to the state bundle
+        String inputText1 = textView1.getText().toString();
+        outState.putString(text_view1_key, inputText1);
+        String inputText2 = textView2.getText().toString();
+        outState.putString(text_view2_key, inputText2);
     }
 
     @Override
@@ -88,4 +117,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
+
+
 }
