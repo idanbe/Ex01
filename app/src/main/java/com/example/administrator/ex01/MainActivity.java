@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
         textView1.setTextSize(TEXT_SIZE);
         textView2.setTextSize(TEXT_SIZE);
         textView2.setText("0");
-
-
+        
         randomButton();
 
         if(savedInstanceState != null)
