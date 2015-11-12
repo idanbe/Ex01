@@ -20,7 +20,7 @@ import android.widget.Toolbar;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity {
 
     private Button button1;
     private Button button2;
@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         textView2.setTextSize(TEXT_SIZE);
         textView2.setText("0");
 
+
+        randomButton();
 
         if(savedInstanceState != null)
         {
@@ -123,17 +125,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
 
     }
-
-    @Override   // change configuration causes to replace between buttons
-    public void onSensorChanged(SensorEvent event) {
-        randomButton();
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // accuracy - no needed (my be..)
-    }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
