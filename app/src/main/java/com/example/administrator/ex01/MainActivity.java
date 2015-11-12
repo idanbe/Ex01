@@ -1,6 +1,12 @@
 package com.example.administrator.ex01;
 
+import android.content.Context;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorEventListener2;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,7 +20,7 @@ import android.widget.Toolbar;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private Button button1;
     private Button button2;
@@ -27,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean flagDublePress1 = false;
     private ViewGroup.LayoutParams params;
 
-    //random place of button 1/2  finished !!!
+
+    //random place of button 1/2  finished !!!implements SensorEventListener
     private int randomButton(){
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(2); // random int we will get "1" || "2"
@@ -63,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         textView2.setText("0");
 
 
-
         if(savedInstanceState != null)
         {
             String savedText1 = savedInstanceState.getString(text_view1_key);
@@ -78,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!flagDublePress1 )
+                if (!flagDublePress1)
                     stopWatch.start();
-                flagDublePress1=true;
+                flagDublePress1 = true;
 
             }
         });
@@ -89,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (flagDublePress1)
-                {
+                if (flagDublePress1) {
                     stopWatch.stop();
                     flagDublePress1 = false;
 
@@ -100,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     int t2 = Integer.parseInt((textView2.getText()).toString());
                     if (t2 > t1 || t2 == 0)  //new record
                     {
-                        Toast.makeText(MainActivity.this,"Good job Bboh!!!:\n" +"New record: " + textView1.getText().toString(),
+                        Toast.makeText(MainActivity.this, "Good job Bboh!!!:\n" + "New record: " + textView1.getText().toString(),
                                 Toast.LENGTH_SHORT).show();
                         textView2.setText(textView1.getText());
                     }
@@ -108,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         textView2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,13 +123,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    // change configuration causes to replace between buttons
-    // but is not work !
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+
+    @Override   // change configuration causes to replace between buttons
+    public void onSensorChanged(SensorEvent event) {
         randomButton();
     }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // accuracy - no needed (my be..)
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
