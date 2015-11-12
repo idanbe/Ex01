@@ -20,7 +20,7 @@ public class StopWatch {
 
 
     //elapsed time in milliseconds
-    public long getTimeMili() {
+    public long getTimeMilli() {
         long elapsed;
         if (running) {
             elapsed = (System.currentTimeMillis() - startTime);

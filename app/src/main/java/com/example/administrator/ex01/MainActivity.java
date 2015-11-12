@@ -1,41 +1,35 @@
 package com.example.administrator.ex01;
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorEventListener2;
-import android.hardware.SensorManager;
+
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import java.util.Random;
 
+
+// Speedometer or something like that
+// time in milliseconds
 public class MainActivity extends AppCompatActivity {
 
     private Button button1;
     private Button button2;
-    private StopWatch stopWatch = new StopWatch();
+    private StopWatch stopWatch = new StopWatch(); // init watch
     private TextView textView1;
     private TextView textView2 ;
     static final int TEXT_SIZE = 50;
-    static final String text_view1_key ="key1";
-    static final String text_view2_key="key2";
-    private boolean flagDublePress1 = false;
-    private ViewGroup.LayoutParams params;
+    static final String text_view1_key ="key1";     // key for shardepre..
+    static final String text_view2_key="key2";      // key for shardepre..
+    private boolean flagDublePress = false;         // double press is no ok
+    SharedPreferences sharedPreferences;
 
-
-    //random place of button 1/2  finished !!!implements SensorEventListener
-    private int randomButton(){
+    //random place of button 1/2  finished !!!
+    private void randomButton(){
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(2); // random int we will get "1" || "2"
         if (randomInt ==1) {
@@ -53,7 +47,21 @@ public class MainActivity extends AppCompatActivity {
         }
         // else , if randomInt == 2 than do not Anything
 
-        return  randomInt;
+        return ;
+    }
+
+
+    // save data in file
+    private void saveData(SharedPreferences sharedPreferences){
+        // create aditor
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // add data
+        editor.putString(text_view1_key, textView1.getText().toString());
+        editor.putString(text_view2_key, textView2.getText().toString());
+
+        // save data
+        editor.apply();
     }
 
     @Override
@@ -61,53 +69,59 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // find
         button1 = (Button)findViewById(R.id.button1);
         button2 = (Button)findViewById(R.id.button2);
         textView1 = (TextView)findViewById(R.id.textView1);
         textView2 = (TextView)findViewById(R.id.textView2);
         textView1.setTextSize(TEXT_SIZE);
         textView2.setTextSize(TEXT_SIZE);
+
+        // create shared pref...
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+
         textView2.setText("0");
 
-        randomButton();
-
-        if(savedInstanceState != null)
-        {
-            String savedText1 = savedInstanceState.getString(text_view1_key);
-            textView1.setText(savedText1);
-            String savedText2 = savedInstanceState.getString(text_view2_key);
-            textView2.setText(savedText2);
-        }
-        else {
-
-        }
-
+        // listener to button1
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!flagDublePress1)
+                if (!flagDublePress)
                     stopWatch.start();
-                flagDublePress1 = true;
-
+                flagDublePress = true;
             }
         });
 
+        // listener to button2
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (flagDublePress1) {
+                // no double press
+                if (flagDublePress) {
                     stopWatch.stop();
-                    flagDublePress1 = false;
+                    flagDublePress = false;
 
-                    long time = stopWatch.getTimeMili();
+                    // get time
+                    long time = stopWatch.getTimeMilli();
+
+                    // convert to string
                     textView1.setText(Long.toString(time));
+
                     int t1 = Integer.parseInt(textView1.getText().toString());
                     int t2 = Integer.parseInt((textView2.getText()).toString());
-                    if (t2 > t1 || t2 == 0)  //new record
+
+                    //if is a new record
+                    if ( t2 > t1 || t2 == 0 )
                     {
-                        Toast.makeText(MainActivity.this, "Good job Bboh!!!:\n" + "New record: " + textView1.getText().toString(),
-                                Toast.LENGTH_SHORT).show();
+                        if(t1 == 1){ // Congratulations message
+                            Toast.makeText(MainActivity.this,"the best record !!!: " + textView1.getText().toString() + "\n touch in record to reset" ,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else { // Good Job message
+                            Toast.makeText(MainActivity.this, "Good Job Bboh!!!:\n" + "New record: " + textView1.getText().toString(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
                         textView2.setText(textView1.getText());
                     }
                     randomButton();
@@ -115,25 +129,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // reset record
         textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textView2.setText("0");
+                randomButton();
             }
         });
-
+        randomButton();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    protected void onResume() {
+        super.onResume();
 
-        //save input text in to the state bundle
-        String inputText1 = textView1.getText().toString();
-        outState.putString(text_view1_key, inputText1);
-        String inputText2 = textView2.getText().toString();
-        outState.putString(text_view2_key, inputText2);
+        // check if there is a data
+        if(sharedPreferences != null)
+        {
+            // restore data
+            textView1.setText(sharedPreferences.getString(text_view1_key ,""));
+            textView2.setText(sharedPreferences.getString(text_view2_key , "0"));
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveData(sharedPreferences);
     }
 
     @Override
