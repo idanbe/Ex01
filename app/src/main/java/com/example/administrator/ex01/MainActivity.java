@@ -1,5 +1,6 @@
 package com.example.administrator.ex01;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,37 +21,46 @@ public class MainActivity extends AppCompatActivity {
     private StopWatch stopWatch = new StopWatch();
     private TextView textView1;
     private TextView textView2 ;
+    static final int TEXT_SIZE = 50;
     static final String text_view1_key ="key1";
     static final String text_view2_key="key2";
-    private boolean flagDublePress = false;
+    private boolean flagDublePress1 = false;
     private ViewGroup.LayoutParams params;
+
+    //random place of button 1/2  finished !!!
+    private int randomButton(){
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(2); // random int we will get "1" || "2"
+        if (randomInt ==1) {
+
+            // replace X location
+            float temp  = button1.getX();
+            button1.setX(button2.getX());
+            button2.setX(temp);
+
+            // replace Y location
+            temp = button1.getY();
+            button1.setY(button2.getY());
+            button2.setY(temp);
+
+        }
+        // else , if randomInt == 2 than do not Anything
+
+        return  randomInt;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         button1 = (Button)findViewById(R.id.button1);
         button2 = (Button)findViewById(R.id.button2);
         textView1 = (TextView)findViewById(R.id.textView1);
         textView2 = (TextView)findViewById(R.id.textView2);
-        textView1.setTextSize(50);
-        textView2.setTextSize(50);
+        textView1.setTextSize(TEXT_SIZE);
+        textView2.setTextSize(TEXT_SIZE);
         textView2.setText("0");
-
-
-        //random place of button 1/2  //not finsed!!!
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(2); // random int we will get "1" || "2"
-        if (randomInt ==1)
-        {
-
-           // button1.setLayoutParams(button2.getLayoutParams());
-
-        }
-        else // randomInt ==2
-        {
-           //do not replace button
-        }
 
 
 
@@ -68,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!flagDublePress)
+                if(!flagDublePress1 )
                     stopWatch.start();
-                flagDublePress=true;
+                flagDublePress1=true;
 
             }
         });
@@ -79,9 +89,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (flagDublePress==true)
+                if (flagDublePress1)
                 {
                     stopWatch.stop();
+                    flagDublePress1 = false;
+
                     long time = stopWatch.getTimeMili();
                     textView1.setText(Long.toString(time));
                     int t1 = Integer.parseInt(textView1.getText().toString());
@@ -92,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                         textView2.setText(textView1.getText());
                     }
-                    flagDublePress = false;
+                    randomButton();
                 }
             }
         });
@@ -104,7 +116,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+    }
+    // change configuration causes to replace between buttons
+    // but is not work !
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        randomButton();
     }
 
     @Override
@@ -139,11 +157,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
 
 }
