@@ -30,9 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
     //random place of button 1/2  finished !!!
     private void randomButton(){
+
+        // random int we will get "1" || "2"
         Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(2); // random int we will get "1" || "2"
-        if (randomInt ==1) {
+        int randomInt = randomGenerator.nextInt(2);
+
+        if (randomInt == 1) {
 
             // replace X location
             float temp  = button1.getX();
@@ -43,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
             temp = button1.getY();
             button1.setY(button2.getY());
             button2.setY(temp);
-
         }
+
         // else , if randomInt == 2 than do not Anything
 
         return ;
@@ -177,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
