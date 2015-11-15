@@ -65,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
         // save data
         editor.apply();
     }
-    
+
+    private void  restartGame(){
+        randomButton();
+        stopWatch.stop();
+        flagDublePress=false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,9 +142,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 textView2.setText("0");
-                stopWatch.stop();
-                randomButton();
-                flagDublePress=false;
+                restartGame();
             }
         });
         randomButton();
@@ -167,8 +170,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        stopWatch.stop();
-        flagDublePress=false;
+        restartGame();
     }
 
 
