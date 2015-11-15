@@ -17,26 +17,26 @@ import java.util.Random;
 // time in milliseconds
 public class MainActivity extends AppCompatActivity {
 
-    private Button button1;
-    private Button button2;
+    private Button button1; // button "1"
+    private Button button2; // button "2"
     private StopWatch stopWatch = new StopWatch(); // init watch
-    private TextView textView1;
-    private TextView textView2 ;
+    private TextView textView1;   //show time
+    private TextView textView2 ;  //show best time
     static final int TEXT_SIZE = 50;
     static final String text_view1_key ="key1";     // key for shardepre..
     static final String text_view2_key="key2";      // key for shardepre..
-    private boolean flagDublePress = false;         // double press is no ok
+    private boolean flagDublePress = false;         // boolean flag to check duble press
     SharedPreferences sharedPreferences;
 
-    //random place of button 1/2  finished !!!
+    //random place of button 1/2
     private void randomButton(){
 
         // random int we will get "1" || "2"
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(2);
 
-        if (randomInt == 1) {
-
+        if (randomInt == 1)
+        {
             // replace X location
             float temp  = button1.getX();
             button1.setX(button2.getX());
@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     // save data in file
-    private void saveData(SharedPreferences sharedPreferences){
+    private void saveData(SharedPreferences sharedPreferences)
+    {
         // create aditor
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         // create shared pref...
         sharedPreferences = getPreferences(MODE_PRIVATE);
 
-        textView2.setText("0");
+        textView2.setText("0"); //init best time to "0"
 
         // listener to button1
         button1.setOnClickListener(new View.OnClickListener() {
