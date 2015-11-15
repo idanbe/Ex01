@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     //random place of button 1/2  finished !!!
     private void randomButton(){
-
         // random int we will get "1" || "2"
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(2);
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // save data
         editor.apply();
     }
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +137,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 textView2.setText("0");
+                stopWatch.stop();
                 randomButton();
+                flagDublePress=false;
             }
         });
         randomButton();
@@ -168,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         stopWatch.stop();
         flagDublePress=false;
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
