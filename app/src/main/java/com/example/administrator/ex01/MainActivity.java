@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     //random place of button 1/2  finished !!!
     private void randomButton(){
-
         // random int we will get "1" || "2"
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(2);
@@ -65,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
         // save data
         editor.apply();
+    }
+
+    private void  restartGame(){
+        randomButton();
+        stopWatch.stop();
+        flagDublePress=false;
     }
 
     @Override
@@ -137,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 textView2.setText("0");
-                randomButton();
+                restartGame();
             }
         });
         randomButton();
@@ -163,11 +168,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause(){
+        super.onPause();
+        restartGame();
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
