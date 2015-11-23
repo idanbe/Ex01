@@ -123,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
                     if ( t2 > t1 || t2 == 0 )
                     {
                         if(t1 == 1){ // Congratulations message
-                            Toast.makeText(MainActivity.this,"the best record !!!: " + textView1.getText().toString() + "\n touch in record to reset" ,
+                            Toast.makeText(MainActivity.this, R.string.the_best_record + textView1.getText().toString() + "\n" + R.string.touch_in_record_to_reset ,
                                     Toast.LENGTH_SHORT).show();
                         }
                         else { // Good Job message
-                            Toast.makeText(MainActivity.this, "Good Job Bboh!!!:\n" + "New record: " + textView1.getText().toString(),
+                            Toast.makeText(MainActivity.this, R.string.Good_Job_Bboh + "\n" + R.string.New_record_ + textView1.getText().toString(),
                                     Toast.LENGTH_SHORT).show();
                         }
                         textView2.setText(textView1.getText());

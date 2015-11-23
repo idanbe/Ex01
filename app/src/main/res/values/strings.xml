@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Ex01</string>
 
-    <string name="hello_world">Babuhhhh</string>
     <string name="action_settings">Settings</string>
+    <string name="the_best_record">the best record !!!: </string>
+    <string name="touch_in_record_to_reset">touch in record to reset</string>
+    <string name="Good_Job_Bboh">Good Job Bboh !!!:</string>
+    <string name="New_record:">New record: </string>
+
 </resources>
